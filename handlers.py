@@ -34,7 +34,7 @@ def change_contact(args, book: AddressBook):
 @input_error
 def get_phones(args, book:AddressBook):
     name = args[0]
-    record = book.find_record(name)
+    record: Record | None = book.find_record(name)
     if not record:
         raise RecordNotFound(entered_name=name)
     return record
@@ -47,3 +47,27 @@ def get_all_contacts(book: AddressBook):
     if len(contact_strings) < 1:
         return 'Adress book is empty.'
     return '\n'.join(contact_strings)
+     
+
+@input_error
+def add_birthday(args, book: AddressBook):
+    name, birthday = args
+    record: Record | None = book.find_record(name)
+    if not record:
+        raise RecordNotFound(entered_name=name)
+    record.add_birthday(birthday=birthday)
+    return f'Birthday added for {record.name}'
+
+@input_error
+def show_birthday(args, book: AddressBook):
+    name = args[0]
+    record: Record | None = book.find_record(name)
+    if not record:
+        raise RecordNotFound(entered_name=name)
+    if not record.birthday:
+        return f'Birthday is not selected for {record.name}'
+    return f'Birthday for {record.name} is: {record.birthday}'
+
+def birthdays(book: AddressBook):
+    birthdays = '\n'.join(book.get_upcoming_birthdays())
+    return f'Upcoming birthdays:\n{'Contact':^20} | {'Birthday':^20} | {'Congratulation date':^20}\n{'-' * 20} | {'-' * 20} | {'-' * 20}\n{birthdays}'

@@ -26,7 +26,8 @@ def input_error(func):
 def handle_value_error(func_name: str) -> str:
     error_messages = {
         'add_contact': 'Enter both a name and phone number after the "add" command.',
-        'change_contact': 'name, phone number to change and new phone number is required after the "change" command.'
+        'change_contact': 'name, phone number to change and new phone number is required after the "change" command.',
+        'add_birthday': 'name and birthday is required after the "add-birthday" command.' 
     }
     return error_messages.get(func_name, default_message)
 
